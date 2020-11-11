@@ -103,4 +103,4 @@ WHERE product_name IN (SELECT product_name
 FROM Products
 WHERE price > 30.00)
 
-
+ALTER TABLE Shop DELETE order_id
