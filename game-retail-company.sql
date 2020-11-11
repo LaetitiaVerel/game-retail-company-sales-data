@@ -18,7 +18,6 @@ CREATE TABLE Shop (
     shop_id INT,
     shop_name VARCHAR(50),
     shop_city VARCHAR(50),
-    order_id INT
 );
 
 CREATE TABLE Orders(
