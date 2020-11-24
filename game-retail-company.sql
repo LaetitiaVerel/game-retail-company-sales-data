@@ -46,7 +46,7 @@ CREATE TABLE Orders(
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
 
-
+-- Joins
 SELECT o.order_id, o.customer_id, o.order_date, o.shop_id
 FROM Orders o
 INNER JOIN Customer c ON o.customer_id=c.customer_id;
@@ -77,9 +77,37 @@ VALUES
 (2, 1, 'Just Dance', 'Ubisoft', 28.00),
 (3, 2, 'Zelda', 'Nintendo', 50.00);
 
+-- Subquery
 SELECT *
 FROM Products
 WHERE product_name IN (SELECT product_name
 FROM Products
 WHERE price > 30.00)
 
+-- Stored Function
+SET GLOBAL log_bin_trust_function_creators = 1;
+
+DELIMITER $$
+CREATE FUNCTION calcProfit(cost FLOAT, price FLOAT) RETURNS VARCHAR(50)
+BEGIN
+DECLARE profit DECIMAL(9,2);
+SET profit = price-cost;
+RETURN profit;
+END$$
+DELIMITER ;
+
+
+-- View
+CREATE VIEW Most_Expensive_Product AS
+SELECT product_name, MAX(price)
+FROM Products
+
+-- Group By & Having
+SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
+SELECT 
+COUNT(category_id),
+category_id
+FROM Products
+GROUP BY category_id
+HAVING category_id = 1;
