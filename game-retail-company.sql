@@ -1,6 +1,12 @@
 CREATE DATABASE Game_Retail_Company;
 USE Game_Retail_Company;
 
+CREATE TABLE Category (
+    category_id INT,
+    category_name VARCHAR(50),
+    PRIMARY KEY (category_id)
+);
+
 CREATE TABLE Products (
     product_id INT,
     category_id INT,
@@ -12,17 +18,20 @@ CREATE TABLE Products (
     FOREIGN KEY (category_id) REFERENCES Category(category_id)
 );
 
-CREATE TABLE Category (
-    category_id INT,
-    category_name VARCHAR(50),
-    PRIMARY KEY (category_id)
-);
+
 
 CREATE TABLE Shop (
     shop_id INT,
     shop_name VARCHAR(50),
     shop_city VARCHAR(50),
     PRIMARY KEY (shop_id)
+);
+
+CREATE TABLE Customer (
+    customer_id INT,
+    customer_name VARCHAR(50),
+    customer_email VARCHAR(50),
+    PRIMARY KEY (customer_id)
 );
 
 CREATE TABLE Orders(
@@ -35,13 +44,6 @@ CREATE TABLE Orders(
     FOREIGN KEY (shop_id) REFERENCES Shop(shop_id),
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
-);
-
-CREATE TABLE Customer (
-    customer_id INT,
-    customer_name VARCHAR(50),
-    customer_email VARCHAR(50),
-    PRIMARY KEY (customer_id),
 );
 
 
@@ -81,4 +83,3 @@ WHERE product_name IN (SELECT product_name
 FROM Products
 WHERE price > 30.00)
 
-ALTER TABLE Shop DELETE order_id
